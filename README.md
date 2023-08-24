@@ -7,10 +7,5 @@ Trabalho DAS - Desenvolvimento Web - 2023
     - `node --version`
     - Verificar NPM
     - `npm --version`
-2. Adicionar pacotes
-    - `npm install -g typescript@latest`
-    - `npm install -g @angular/cli@latest`
-    - `npm install -g @angular/cli`
-    - Verificar Angular CLI `ng version` ou `ng --version`
-3. Instalar pacotes `npm install`
-4. Ligar `ng serve`
+2. Instalar pacotes `npm install`
+3. Ligar `ng serve`
