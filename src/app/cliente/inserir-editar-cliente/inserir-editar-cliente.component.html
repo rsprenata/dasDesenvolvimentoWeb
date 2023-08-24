@@ -5,12 +5,12 @@
   <form #formCliente="ngForm">
     <div class="form-group">
       <label for="cpf">CPF:</label>
-      <input type="number" class="form-control" id="cpf" name="cpf" maxlength="11" required
-        [(ngModel)]="cliente.cpf" #cpf="ngModel">
+      <input type="text" class="form-control" id="cpf" name="cpf" required
+        [(ngModel)]="cliente.cpf" #cpf="ngModel" mask="000.000.000-00">
 
       <div class="alert alert-danger" *ngIf="cpf.errors && (cpf.dirty || cpf.touched)">
-        <div [hidden]="!cpf.errors?.['required']"> Digite o cpf do cliente. </div>
-        <div [hidden]="!cpf.errors?.['maxlength']"> O cpf deve conter no máximo 11 caracteres. </div>
+        <div [hidden]="!cpf.errors['required']"> Digite o cpf do cliente. </div>
+        <div [hidden]="!cpf.errors['maxlength']"> O cpf deve conter no máximo 11 caracteres. </div>
       </div>
     </div>
 
@@ -20,8 +20,8 @@
         [(ngModel)]="cliente.nome" #nome="ngModel">
 
       <div class="alert alert-danger" *ngIf="nome.errors && (nome.dirty || nome.touched)">
-        <div [hidden]="!nome.errors?.['required']"> Digite o nome da cliente. </div>
-        <div [hidden]="!nome.errors?.['minlength']"> O nome deve conter ao menos 2 caracteres. </div>
+        <div [hidden]="!nome.errors['required']"> Digite o nome da cliente. </div>
+        <div [hidden]="!nome.errors['minlength']"> O nome deve conter ao menos 2 caracteres. </div>
       </div>
     </div>
 
@@ -31,8 +31,8 @@
         [(ngModel)]="cliente.sobrenome" #sobrenome="ngModel">
 
       <div class="alert alert-danger" *ngIf="sobrenome.errors && (sobrenome.dirty || sobrenome.touched)">
-        <div [hidden]="!sobrenome.errors?.['required']"> Digite o sobrenome da cliente. </div>
-        <div [hidden]="!sobrenome.errors?.['required']"> O sobrenome deve conter ao menos 2 caracteres. </div>
+        <div [hidden]="!sobrenome.errors['required']"> Digite o sobrenome da cliente. </div>
+        <div [hidden]="!sobrenome.errors['required']"> O sobrenome deve conter ao menos 2 caracteres. </div>
       </div>
     </div>
 

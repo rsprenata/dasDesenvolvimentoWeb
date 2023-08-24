@@ -16,14 +16,19 @@
   </thead>
   <tbody>
     <tr *ngFor="let cliente of clientes">
-      <td>{{cliente.cpf}}</td>
-      <td>{{cliente.nome}}</td>
+      <td>{{cliente.cpf! | mask: '000.000.000-00'}}</td>
+      <td>{{cliente.nome | uppercase}}</td>
       <td>{{cliente.sobrenome}}</td>
       <td class="text-center" style="width: 300px">
+        <button type="button" class="btn btn-xs btn-info" (click)="abrirModalCliente(cliente)">
+          <i class="fa fa-eye" aria-hidden="true"></i> Ver
+        </button>
+
         <a href="#" title="Editar" alt="Editar" class="btn btn-xs btn-info" 
           [routerLink]="['/cliente/editar', cliente.id]">
           <i class="fa fa-edit" aria-hidden="true"></i> Editar
         </a>
+        
         <a href="#" title="Remover" alt="Remover" class="btn btn-xs btn-danger"
           (click)="remover($event, cliente)">
           <i class="fa fa-times" aria-hidden="true"></i> Remover
