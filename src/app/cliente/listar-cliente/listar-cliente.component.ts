@@ -29,7 +29,7 @@ export class ListarClienteComponent implements OnInit {
   remover($event: any, cliente: Cliente): void {
     $event.preventDefault();
 
-    if(confirm(`Deseja realmente remove o cliente ${cliente.nome}?`)) {
+    if(confirm(`Deseja realmente remover o cliente ${cliente.nome}?`)) {
       this.clienteService.remover(cliente.id!);
 
       this.clientes = this.listarTodos();
