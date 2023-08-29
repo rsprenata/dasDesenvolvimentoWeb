@@ -9,3 +9,18 @@ Trabalho DAS - Desenvolvimento Web - 2023
     - `npm --version`
 2. Instalar pacotes `npm install`
 3. Ligar `ng serve`
+
+
+## Comandos uteis
+- Criar modulo
+    - ex: `ng g module pessoa`
+- Criar modelo
+    - ex: `ng g class shared/models/pessoa --type=model`
+- Criar serviço
+    - ex: `ng g service pessoa/services/pessoa`
+- Criar componente
+    - ex: `ng g component pessoa/listar-pessoa`
+- Criar diretiva de validação
+    - ex: `ng g directive shared/directives/numerico`
+- Criar pipe
+    - ex: `ng g pipe shared/pipes/meu-pipe`
