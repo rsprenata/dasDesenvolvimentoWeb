@@ -46,7 +46,10 @@ export class RealizarPedidoComponent implements OnInit {
       this.pedido.items = this.produtosCarrinho
       this.pedidoService.inserir(this.pedido);
       
-      this.router.navigate(["/pedido"]);
+      this.pedido = new Pedido();
+      this.produtosCarrinho = [];
+      this.cpfCliente = ""
+      alert("Pedido realizado com sucesso")
     }
   }
 
