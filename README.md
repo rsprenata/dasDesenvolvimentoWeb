@@ -8,8 +8,12 @@ Trabalho DAS - Desenvolvimento Web - 2023
     - Verificar NPM
     - `npm --version`
 2. Instalar pacotes `npm install`
-3. Ligar `ng serve`
-
+3. Se já tem o ambiente montado:
+    - `npm install -g typescript@latest`
+    - `npm install -g @angular/cli@latest`
+   Para uma instalação nova
+    - `npm install -g @angular/cli`
+4. Ligar `ng serve`
 
 ## Comandos uteis
 - Criar modulo
