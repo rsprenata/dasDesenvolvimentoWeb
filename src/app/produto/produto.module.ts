@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { InserirEditarProdutoComponent } from './inserir-editar-produto/inserir-editar-produto.component';
 import { ListarProdutoComponent } from './listar-produto/listar-produto.component';
 import { ProdutoService } from './services';
+import { RouterModule } from '@angular/router';
 
 
 
@@ -12,7 +13,8 @@ import { ProdutoService } from './services';
     ListarProdutoComponent
   ],
   imports: [
-    CommonModule
+    CommonModule,
+    RouterModule,
   ],
   providers:[
     ProdutoService
