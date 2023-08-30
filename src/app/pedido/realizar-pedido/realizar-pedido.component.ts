@@ -4,6 +4,7 @@ import { Cliente, Pedido, Produto } from 'src/app/shared';
 import { PedidoService } from '../services/pedido.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ProdutoService } from 'src/app/produto';
+import { ItemDoPedido } from 'src/app/shared/models/item-do-pedido.model';
 
 @Component({
   selector: 'app-realizar-pedido',
@@ -16,8 +17,8 @@ export class RealizarPedidoComponent implements OnInit {
 
   produtos: Produto[] = [];
   produtoSelecionado!: Produto;
-  cpfCliente!: String;
-  produtosCarrinho: Produto[] = [];
+  cpfCliente!: string;
+  produtosCarrinho: ItemDoPedido[] = [];
   quantidade!: number;
 
   constructor(
@@ -32,16 +33,21 @@ export class RealizarPedidoComponent implements OnInit {
     this.produtos = this.produtoService.listarTodos();
   }
 
-  inserir(): void {
+  insereProduto() {
+    let novoItem: ItemDoPedido = new ItemDoPedido(0, this.produtoSelecionado)
+    this.produtosCarrinho.push(novoItem)
+    console.log("entrou no selecionaProduto")
+  }
+
+  salvarPedido(): void {
     if (this.formPedido.form.valid) {
+      this.pedido.cliente = new Cliente();
+      this.pedido.cliente.cpf = this.cpfCliente
+      this.pedido.items = this.produtosCarrinho
       this.pedidoService.inserir(this.pedido);
       
       this.router.navigate(["/pedido"]);
     }
   }
-
-  insereProduto() {
-    console.log("entrou no selecionaProduto")
-}
 
 }
