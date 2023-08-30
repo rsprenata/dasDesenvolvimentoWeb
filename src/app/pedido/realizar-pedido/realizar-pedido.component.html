@@ -1,55 +1,58 @@
-<h1 *ngIf="!cliente.id">Novo Cliente</h1>
-<h1 *ngIf="cliente.id">Editar Cliente</h1>
-
 <div class="well">
   <form #formPedido="ngForm">
     <div class="form-group">
-      <label for="cpf">CPF:</label>
+      <label for="cpf">CPF do Cliente:</label>
       <input type="text" class="form-control" id="cpf" name="cpf" required
-        [(ngModel)]="cliente.cpf" #cpf="ngModel" mask="000.000.000-00">
-
-      <div class="alert alert-danger" *ngIf="cpf.errors && (cpf.dirty || cpf.touched)">
-        <div [hidden]="!cpf.errors['required']"> Digite o cpf do cliente. </div>
-        <div [hidden]="!cpf.errors['maxlength']"> O cpf deve conter no máximo 11 caracteres. </div>
-      </div>
+        [(ngModel)]="cpfCliente" #cpf="ngModel" mask="000.000.000-00">
     </div>
 
     <div class="form-group">
-      <label for="nome">Nome:</label>
-      <input type="text" class="form-control" id="nome" name="nome" minlength="2" required
-        [(ngModel)]="cliente.nome" #nome="ngModel">
-
-      <div class="alert alert-danger" *ngIf="nome.errors && (nome.dirty || nome.touched)">
-        <div [hidden]="!nome.errors['required']"> Digite o nome da cliente. </div>
-        <div [hidden]="!nome.errors['minlength']"> O nome deve conter ao menos 2 caracteres. </div>
-      </div>
-    </div>
-
-    <div class="form-group">
-      <label for="sobrenome">Sobrenome:</label>
-      <input type="text" class="form-control" id="sobrenome" name="sobrenome" minlength="2" required
-        [(ngModel)]="cliente.sobrenome" #sobrenome="ngModel">
-
-      <div class="alert alert-danger" *ngIf="sobrenome.errors && (sobrenome.dirty || sobrenome.touched)">
-        <div [hidden]="!sobrenome.errors['required']"> Digite o sobrenome da cliente. </div>
-        <div [hidden]="!sobrenome.errors['required']"> O sobrenome deve conter ao menos 2 caracteres. </div>
-      </div>
-    </div>
-
-    <div class="form-group">
-      <button type="button" class="btn btn-primary"
-        (click)="inserir()" [disabled]="!formPedido.form.valid" *ngIf="!cliente.id">
-        <i class="fa fa-save" aria-hidden="true"></i> Salvar
-      </button>
+      <label for="produto">Produtos:</label>
       
+    </div>
+    <div class="row">
+      <div class="col-md-6">
+        <ng-select name="produto" [items]="produtos"
+        bindLabel="descricao"
+        [(ngModel)]="produtoSelecionado"
+        placeholder="Selecione um produto">
+      </ng-select>
+      </div>
+      <div class="col-md-6">
+        <div class="form-group">
+          <button type="button" class="btn btn-primary"
+            (click)="insereProduto()">
+            <i class="fa fa-plus" aria-hidden="true"></i> Adicionar produto
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <h1>Carrinho</h1>
+
+    <table class="table table-striped table-bordered table-hover">
+      <thead>
+        <tr>
+          <th>Produto</th>
+          <th>Quantidade</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let produto of produtosCarrinho">
+          <td>{{produto.descricao}}</td>
+          <td><input type="number" class="form-control" id="quantidade" name="quantidade" required
+            [(ngModel)]="quantidade"></td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="form-group">
       <button type="button" class="btn btn-primary"
-        (click)="atualizar()" [disabled]="!formPedido.form.valid" *ngIf="cliente.id">
-        <i class="fa fa-save" aria-hidden="true"></i> Editar
+        (click)="inserir()">
+        <i class="fa fa-save" aria-hidden="true"></i> Salvar pedido
       </button>
 
-      <a class="btn btn-secondary" [routerLink]="['/cliente']">
-        <i class="fa fa-arrow-left" aria-hidden="true"></i> Voltar
-      </a>
     </div>
+
   </form>
 </div>
