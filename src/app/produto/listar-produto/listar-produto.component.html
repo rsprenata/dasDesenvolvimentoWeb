@@ -1,0 +1,31 @@
+<h1>Produtos</h1>
+
+<h2>Só raridades</h2>
+<div class="row mb-3">
+  <div class="col-md-12">
+    <a href="#" title="Novo" alt="Novo" class="btn btn-xs btn-success" [routerLink]="['/produto/inserir']">
+      <i class="fa fa-plus" aria-hidden="true"></i> Novo
+    </a>
+  </div>
+</div>
+<div class="row">
+  <div class="col-sm-6 mb-3" *ngFor="let produto of produtos">
+    <div class="card">
+      <div class="card-body">
+        <h5 class="card-title">{{produto.descricao}}</h5>
+        <p class="card-text">ID: {{produto.id}}</p>
+        <!-- <a href="#" class="btn btn-primary">Comprar</a> -->
+        <a href="#" title="Editar" alt="Editar" class="btn btn-xs btn-info" 
+          [routerLink]="['/produto/editar', produto.id]">
+          <i class="fa fa-edit" aria-hidden="true"></i> Editar
+        </a>
+        
+        <a href="#" title="Remover" alt="Remover" class="btn btn-xs btn-danger"
+          (click)="remover($event, produto)">
+          <i class="fa fa-times" aria-hidden="true"></i> Remover
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
+<p *ngIf="produtos.length == 0">Nenhum produto cadastrado.</p>
