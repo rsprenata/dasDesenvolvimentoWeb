@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { ListarClienteComponent } from './cliente/listar-cliente/listar-cliente.component';
 import { InserirEditarClienteComponent } from './cliente/inserir-editar-cliente/inserir-editar-cliente.component';
-import { ListarProdutoComponent } from './produto';
+import { InserirEditarProdutoComponent, ListarProdutoComponent } from './produto';
 
 const routes: Routes = [
   { 
@@ -31,8 +31,8 @@ const routes: Routes = [
     component: ListarProdutoComponent
   },
   { 
-    path: 'produto/:id',
-    component: ListarProdutoComponent
+    path: 'produto/inserir',
+    component: InserirEditarProdutoComponent
   }
 ];
 
