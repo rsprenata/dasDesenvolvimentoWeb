@@ -3,6 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { ListarClienteComponent } from './cliente/listar-cliente/listar-cliente.component';
 import { InserirEditarClienteComponent } from './cliente/inserir-editar-cliente/inserir-editar-cliente.component';
 import { InserirEditarProdutoComponent, ListarProdutoComponent } from './produto';
+import { RealizarPedidoComponent } from './pedido/realizar-pedido/realizar-pedido.component';
 
 const routes: Routes = [
   { 
@@ -43,6 +44,10 @@ const routes: Routes = [
   { 
     path: 'produto/editar/:id',
     component: InserirEditarProdutoComponent
+  },
+  { 
+    path: 'pedido',
+    component: RealizarPedidoComponent
   }
 ];
 

@@ -7,6 +7,8 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { ClienteModule } from './cliente/cliente.module';
 import { SharedModule } from './shared';
 import { ProdutoModule } from './produto';
+import { NgSelectModule } from '@ng-select/ng-select';
+import { PedidoModule } from './pedido/pedido.module';
 
 @NgModule({
   declarations: [
@@ -18,7 +20,9 @@ import { ProdutoModule } from './produto';
     NgbModule,
     ClienteModule,
     ProdutoModule,
-    SharedModule
+    SharedModule,
+    NgSelectModule,
+    PedidoModule
   ],
   providers: [],
   bootstrap: [AppComponent]
