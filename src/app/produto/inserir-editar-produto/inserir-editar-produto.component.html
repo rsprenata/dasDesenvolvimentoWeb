@@ -1,1 +1,32 @@
-<p>inserir-editar-produto works!</p>
+<h1 *ngIf="!produto.id">Novo produto</h1>
+<h1 *ngIf="produto.id">Editar produto</h1>
+
+<div class="well">
+  <form #formProduto="ngForm">
+    <div class="form-group">
+      <label for="descricao">Descrição:</label>
+      <input type="text" class="form-control" id="descricao" name="descricao" required
+        [(ngModel)]="produto.descricao" #descricao="ngModel">
+
+      <div class="alert alert-danger" *ngIf="descricao.errors && (descricao.dirty || descricao.touched)">
+        <div [hidden]="!descricao.errors['required']"> Digite a descrição do produto. </div>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <button type="button" class="btn btn-primary"
+        (click)="inserir()" [disabled]="!formProduto.form.valid" *ngIf="!produto.id">
+        <i class="fa fa-save" aria-hidden="true"></i> Salvar
+      </button>
+      
+      <button type="button" class="btn btn-primary"
+        (click)="atualizar()" [disabled]="!formProduto.form.valid" *ngIf="produto.id">
+        <i class="fa fa-save" aria-hidden="true"></i> Editar
+      </button>
+
+      <a class="btn btn-secondary" [routerLink]="['/produto']">
+        <i class="fa fa-arrow-left" aria-hidden="true"></i> Voltar
+      </a>
+    </div>
+  </form>
+</div>

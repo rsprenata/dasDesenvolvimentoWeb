@@ -10,6 +10,7 @@ const routes: Routes = [
     redirectTo: 'cliente/listar',
     pathMatch: 'full'
   },
+/******************************/
   { 
     path: 'cliente',
     redirectTo: 'cliente/listar'
@@ -26,12 +27,21 @@ const routes: Routes = [
     path: 'cliente/editar/:id',
     component: InserirEditarClienteComponent
   },
+/******************************/
   { 
     path: 'produto',
-    component: ListarProdutoComponent
+    redirectTo: 'produto/listar'
+  },
+  { 
+    path: 'produto/listar',
+    component: ListarProdutoComponent 
   },
   { 
     path: 'produto/inserir',
+    component: InserirEditarProdutoComponent
+  },
+  { 
+    path: 'produto/editar/:id',
     component: InserirEditarProdutoComponent
   }
 ];

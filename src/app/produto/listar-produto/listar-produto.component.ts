@@ -24,6 +24,13 @@ export class ListarProdutoComponent {
   }
 
 
+  remover($event: any, produto: Produto): void {
+    $event.preventDefault();
 
+    if(confirm(`Deseja realmente remover o produto ${produto.descricao}?`)) {
+      this.produtoService.remover(produto.id!);
 
+      this.produtos = this.listarTodos();
+    }
+  }
 }

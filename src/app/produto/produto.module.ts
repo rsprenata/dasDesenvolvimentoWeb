@@ -4,6 +4,8 @@ import { InserirEditarProdutoComponent } from './inserir-editar-produto/inserir-
 import { ListarProdutoComponent } from './listar-produto/listar-produto.component';
 import { ProdutoService } from './services';
 import { RouterModule } from '@angular/router';
+import { FormsModule } from '@angular/forms';
+import { SharedModule } from '../shared';
 
 
 
@@ -15,6 +17,8 @@ import { RouterModule } from '@angular/router';
   imports: [
     CommonModule,
     RouterModule,
+    FormsModule,
+    SharedModule
   ],
   providers:[
     ProdutoService
