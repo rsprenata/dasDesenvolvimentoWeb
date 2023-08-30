@@ -1,13 +1,18 @@
 <h1>Produtos</h1>
 
 <h2>Só raridades</h2>
+
+<a title="Novo" alt="Novo" class="btn btn-xs btn-success"
+  [routerLink]="['/produto/inserir']">
+  <i class="fa fa-plus" aria-hidden="true"></i> Novo
+</a>
+
 <div class="row">
     <div class="col-sm-6" *ngFor="let produto of produtos" >
       <div class="card">
         <div class="card-body">
             <h5 class="card-title">{{produto.id}}</h5>
             <p class="card-text">{{produto.descricao}}</p>
-          <a href="#" class="btn btn-primary">Comprar</a>
         </div>
       </div>
     </div>
