@@ -5,6 +5,7 @@ import { PedidoService } from '../services/pedido.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ProdutoService } from 'src/app/produto';
 import { ItemDoPedido } from 'src/app/shared/models/item-do-pedido.model';
+import { ClienteService } from 'src/app/cliente';
 
 @Component({
   selector: 'app-realizar-pedido',
@@ -24,6 +25,7 @@ export class RealizarPedidoComponent implements OnInit {
   constructor(
     private pedidoService: PedidoService,
     private produtoService: ProdutoService,
+    private clienteService: ClienteService,
     private route: ActivatedRoute,
     private router: Router
   ) {}
@@ -36,21 +38,24 @@ export class RealizarPedidoComponent implements OnInit {
   insereProduto() {
     let novoItem: ItemDoPedido = new ItemDoPedido(0, this.produtoSelecionado)
     this.produtosCarrinho.push(novoItem)
-    console.log("entrou no selecionaProduto")
   }
 
   salvarPedido(): void {
     if (this.formPedido.form.valid) {
-      this.pedido.cliente = new Cliente();
-      this.pedido.cliente.cpf = this.cpfCliente
-      this.pedido.items = this.produtosCarrinho
-      this.pedidoService.inserir(this.pedido);
-      
-      this.pedido = new Pedido();
-      this.produtosCarrinho = [];
-      this.cpfCliente = ""
-      alert("Pedido realizado com sucesso")
-      this.router.navigate(["/pedido"]);
+      let cliente = this.clienteService.buscarPorCpf(this.cpfCliente.replace(/[^\w\s]/gi, ''));
+      if (cliente) {
+        this.pedido.cliente = cliente;
+        this.pedido.items = this.produtosCarrinho
+        this.pedidoService.inserir(this.pedido);
+        
+        this.pedido = new Pedido();
+        this.produtosCarrinho = [];
+        this.cpfCliente = ""
+        alert("Pedido realizado com sucesso")
+        this.router.navigate(["/pedido"]);
+      } else {
+        alert("Cliente não encontrado")
+      }
     }
   }
 

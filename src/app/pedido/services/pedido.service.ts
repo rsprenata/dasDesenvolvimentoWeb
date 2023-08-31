@@ -17,6 +17,12 @@ export class PedidoService {
     return pedidos ? JSON.parse(pedidos) : [];
   }
 
+  listarPorCpf(cpf: string): Pedido[] {
+    const pedidos = this.listarTodos();
+
+    return pedidos.filter(pedido => pedido.cliente?.cpf == cpf);
+  }
+
   inserir(pedido: Pedido): void {
 
     const pedidos = this.listarTodos();

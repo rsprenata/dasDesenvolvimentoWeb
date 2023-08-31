@@ -11,6 +11,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 })
 export class ListarPedidoComponent {
   public pedidos: Pedido[] = [];
+  public cpfCliente: string = '';
 
   constructor(
     private pedidoService: PedidoService,
@@ -21,11 +22,18 @@ export class ListarPedidoComponent {
   ngOnInit(): void {
     //let id = +this.route.snapshot.params['id'];
     this.pedidos = this.listarTodos();
-    console.log(this.pedidos);
   }
 
   listarTodos(): Pedido[] {
     return this.pedidoService.listarTodos();
+  }
+
+  listarPorCpf(): void {
+    let cpfSemMascara = this.cpfCliente.replace(/[^\w\s]/gi, '');
+    if (cpfSemMascara)
+      this.pedidos = this.pedidoService.listarPorCpf(cpfSemMascara);
+    else
+      this.pedidos =  this.pedidoService.listarTodos();
   }
 
 

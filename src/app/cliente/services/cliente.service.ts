@@ -33,6 +33,12 @@ export class ClienteService {
     return clientes.find(cliente => cliente.id === id);
   }
 
+  buscarPorCpf(cpf: string): Cliente | undefined {
+    const clientes: Cliente[] = this.listarTodos();
+
+    return clientes.find(cliente => cliente.cpf == cpf);
+  }
+
   atualizar(cliente: Cliente): void {
     const clientes: Cliente[] = this.listarTodos();
 
