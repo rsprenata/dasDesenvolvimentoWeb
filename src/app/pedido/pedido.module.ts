@@ -1,16 +1,18 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RealizarPedidoComponent } from './realizar-pedido/realizar-pedido.component';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { SharedModule } from '../shared';
+import { RealizarPedidoComponent } from './realizar-pedido/';
+import { ListarPedidoComponent } from './listar-pedido/';
 
 
 
 @NgModule({
   declarations: [
-    RealizarPedidoComponent
+    RealizarPedidoComponent,
+    ListarPedidoComponent
   ],
   imports: [
     CommonModule,
