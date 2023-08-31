@@ -3,8 +3,11 @@ Trabalho DAS - Desenvolvimento Web - 2023
 
 Equipe:
 David Reksidler Júnior
+
 Mateus Mischel Lodi
+
 Matheus da Rocha Schelbauer
+
 Renata Soares Pereira
 
 ## Instalação
