@@ -28,6 +28,7 @@ export class PedidoService {
     const pedidos = this.listarTodos();
 
     pedido.id = new Date().getTime();
+    pedido.data = new Date();
 
     pedidos.push(pedido);
 

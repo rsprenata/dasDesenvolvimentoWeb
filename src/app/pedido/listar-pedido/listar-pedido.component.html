@@ -35,7 +35,7 @@
             <small>Cliente: {{pedido.cliente?.cpf! | mask: '000.000.000-00'}}</small>
           </div>
           <div class="card">
-            <div class="card-header"><h6>Itens do pedido:</h6></div>
+            <div class="card-header"><h6>Itens do pedido:</h6><small>Data: {{pedido.data}}</small></div>
             <div class="card-body">
               <p class="mb-1 " *ngFor="let itemPedido of pedido.items">
                 {{itemPedido.quantidade}} x {{itemPedido.produto?.descricao}}
