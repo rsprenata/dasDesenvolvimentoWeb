@@ -50,6 +50,7 @@ export class RealizarPedidoComponent implements OnInit {
       this.produtosCarrinho = [];
       this.cpfCliente = ""
       alert("Pedido realizado com sucesso")
+      this.router.navigate(["/pedido"]);
     }
   }
 
