@@ -6,6 +6,7 @@ import { RouterModule } from '@angular/router';
 import { SharedModule } from '../shared';
 import { RealizarPedidoComponent } from './realizar-pedido/';
 import { ListarPedidoComponent } from './listar-pedido/';
+import { NgxMaskModule } from 'ngx-mask';
 
 
 
@@ -19,6 +20,7 @@ import { ListarPedidoComponent } from './listar-pedido/';
     NgSelectModule,
     FormsModule,
     RouterModule,
+    NgxMaskModule.forRoot(),
     SharedModule
   ]
 })

@@ -1,18 +1,34 @@
 <h1>Pedidos</h1>
 
 <div class="row mb-3">
-  <div class="col-md-12">
+  <div class="col-md-9">
+  </div>
+  <div class="col-md-3">
+    <div class="form-group">
+      <label for="cpf">CPF do Cliente:</label>
+    </div>
+  </div>
+</div>
+<div class="row mb-3">
+  <div class="col-md-9">
     <a href="#" title="Novo" alt="Novo" class="btn btn-xs btn-success" 
     [routerLink]="['/pedido/inserir']">
     <i class="fa fa-plus" aria-hidden="true"></i> Novo Pedido
   </a>
+  </div>
+  <div class="col-md-3">
+    <div class="form-group input-group mb-3">
+      <input type="text" class="form-control" id="cpf" name="cpf" required
+        [(ngModel)]="cpfCliente" #cpf="ngModel" mask="000.000.000-00">
+      <button class="btn btn-xs btn-info" type="button" id="button-addon2" (click)="listarPorCpf()">Filtrar</button>
+    </div>
   </div>
 </div>
 
 <div class="row">
   <div class="col-md-12">
     <div class="list-group">
-      <div *ngFor="let pedido of pedidos">
+      <div *ngFor="let pedido of pedidos" class="mb-3">
         <a class="list-group-item list-group-item-action flex-column align-items-start">
           <div class="d-flex w-100 justify-content-between">
             <h5 class="mb-1">ID Pedido: {{pedido.id}}</h5>

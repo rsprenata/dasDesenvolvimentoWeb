@@ -38,13 +38,11 @@ export class RealizarPedidoComponent implements OnInit {
   insereProduto() {
     let novoItem: ItemDoPedido = new ItemDoPedido(0, this.produtoSelecionado)
     this.produtosCarrinho.push(novoItem)
-    console.log("entrou no selecionaProduto")
   }
 
   salvarPedido(): void {
     if (this.formPedido.form.valid) {
       let cliente = this.clienteService.buscarPorCpf(this.cpfCliente.replace(/[^\w\s]/gi, ''));
-      console.log(cliente);
       if (cliente) {
         this.pedido.cliente = cliente;
         this.pedido.items = this.produtosCarrinho

@@ -36,8 +36,6 @@ export class ClienteService {
   buscarPorCpf(cpf: string): Cliente | undefined {
     const clientes: Cliente[] = this.listarTodos();
 
-    console.log(clientes);
-
     return clientes.find(cliente => cliente.cpf == cpf);
   }
 
