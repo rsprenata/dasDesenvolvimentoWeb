@@ -4,6 +4,7 @@ import { ClienteService } from '../services/cliente.service';
 import { Cliente } from 'src/app/shared';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ModalClienteComponent } from '../modal-cliente/modal-cliente.component';
+import { PedidoService } from 'src/app/pedido/services/pedido.service';
 
 @Component({
   selector: 'app-listar-cliente',
@@ -15,6 +16,7 @@ export class ListarClienteComponent implements OnInit {
 
   constructor(
     private clienteService: ClienteService,
+    private pedidoService: PedidoService,
     private modalService: NgbModal
   ) {}
 
@@ -30,7 +32,11 @@ export class ListarClienteComponent implements OnInit {
     $event.preventDefault();
 
     if(confirm(`Deseja realmente remover o cliente ${cliente.nome}?`)) {
-      this.clienteService.remover(cliente.id!);
+      let pedidos = this.pedidoService.listarPorCpf(cliente.cpf!);
+      if (!pedidos || pedidos.length <= 0)
+        this.clienteService.remover(cliente.id!);
+      else 
+        alert('Não é possível excluir esse cliente pois ele tem pedidos.')
 
       this.clientes = this.listarTodos();
     }
