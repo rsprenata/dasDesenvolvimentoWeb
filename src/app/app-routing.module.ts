@@ -4,14 +4,20 @@ import { ListarClienteComponent } from './cliente/listar-cliente/listar-cliente.
 import { InserirEditarClienteComponent } from './cliente/inserir-editar-cliente/inserir-editar-cliente.component';
 import { InserirEditarProdutoComponent, ListarProdutoComponent } from './produto';
 import { RealizarPedidoComponent } from './pedido/realizar-pedido/realizar-pedido.component';
+import { ListarPedidoComponent } from './pedido';
+import { HomeComponent } from './home';
 
 const routes: Routes = [
   { 
     path: '',
-    redirectTo: 'cliente/listar',
+    redirectTo: 'home',
     pathMatch: 'full'
   },
 /******************************/
+  {
+    path: 'home',
+    component: HomeComponent
+  },
   { 
     path: 'cliente',
     redirectTo: 'cliente/listar'
@@ -47,8 +53,17 @@ const routes: Routes = [
   },
   { 
     path: 'pedido',
+    component: ListarPedidoComponent
+  },
+  { 
+    path: 'pedido/listar',
+    component: ListarPedidoComponent
+  },
+  { 
+    path: 'pedido/inserir',
     component: RealizarPedidoComponent
-  }
+  },
+  
 ];
 
 @NgModule({
