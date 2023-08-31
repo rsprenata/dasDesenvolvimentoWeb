@@ -1,0 +1,58 @@
+<div class="well">
+  <form #formPedido="ngForm">
+    <div class="form-group">
+      <label for="cpf">CPF do Cliente:</label>
+      <input type="text" class="form-control" id="cpf" name="cpf" required
+        [(ngModel)]="cpfCliente" #cpf="ngModel" mask="000.000.000-00">
+    </div>
+
+    <div class="form-group">
+      <label for="produto">Produtos:</label>
+      
+    </div>
+    <div class="row">
+      <div class="col-md-6">
+        <ng-select name="produto" [items]="produtos"
+        bindLabel="descricao"
+        [(ngModel)]="produtoSelecionado"
+        placeholder="Selecione um produto">
+      </ng-select>
+      </div>
+      <div class="col-md-6">
+        <div class="form-group">
+          <button type="button" class="btn btn-primary"
+            (click)="insereProduto()">
+            <i class="fa fa-plus" aria-hidden="true"></i> Adicionar produto
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <h1>Carrinho</h1>
+
+    <table class="table table-striped table-bordered table-hover">
+      <thead>
+        <tr>
+          <th>Produto</th>
+          <th>Quantidade</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let item of produtosCarrinho">
+          <td>{{item.produto?.descricao}}</td>
+          <td><input type="number" class="form-control" id="quantidade" name="quantidade" required
+            [(ngModel)]="item.quantidade"></td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="form-group">
+      <button type="button" class="btn btn-primary"
+        (click)="salvarPedido()">
+        <i class="fa fa-save" aria-hidden="true"></i> Salvar pedido
+      </button>
+
+    </div>
+
+  </form>
+</div>
