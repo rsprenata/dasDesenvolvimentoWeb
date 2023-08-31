@@ -1,6 +1,12 @@
 # dasDesenvolvimentoWeb
 Trabalho DAS - Desenvolvimento Web - 2023
 
+Equipe:
+David Reksidler Júnior
+Mateus Mischel Lodi
+Matheus da Rocha Schelbauer
+Renata Soares Pereira
+
 ## Instalação
 1. Instalar Node.js
 	- Instalar versão 16
