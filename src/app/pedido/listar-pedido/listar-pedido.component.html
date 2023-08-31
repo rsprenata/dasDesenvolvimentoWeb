@@ -1,0 +1,27 @@
+<h1>Pedidos realizados</h1>
+
+<a href="#" title="Novo" alt="Novo" class="btn btn-xs btn-success" 
+  [routerLink]="['/pedido/inserir']">
+  <i class="fa fa-plus" aria-hidden="true"></i> Novo Pedido
+</a>
+
+<div class="list-group">
+  <div *ngFor="let pedido of pedidos">
+    <a class="list-group-item list-group-item-action flex-column align-items-start">
+      <div class="d-flex w-100 justify-content-between">
+        <h5 class="mb-1">ID Pedido: {{pedido.id}}</h5>
+        <small>Cliente: {{pedido.cliente?.cpf}}</small>
+      </div>
+      <div class="card">
+        <div class="card-header"><h6>Itens do pedido:</h6></div>
+        <div class="card-body">
+          <p class="mb-1 " *ngFor="let itemPedido of pedido.items">
+            {{itemPedido.quantidade}} x {{itemPedido.produto?.descricao}}
+          </p>
+        </div>
+      </div>
+
+      <small></small>
+    </a>
+  </div>
+  </div>
