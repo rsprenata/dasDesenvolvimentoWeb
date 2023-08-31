@@ -1,0 +1,1 @@
+export * from './realizar-pedido.component';
