@@ -32,7 +32,7 @@
         <a class="list-group-item list-group-item-action flex-column align-items-start">
           <div class="d-flex w-100 justify-content-between">
             <h5 class="mb-1">ID Pedido: {{pedido.id}}</h5>
-            <small>Cliente: {{pedido.cliente?.cpf}}</small>
+            <small>Cliente: {{pedido.cliente?.cpf! | mask: '000.000.000-00'}}</small>
           </div>
           <div class="card">
             <div class="card-header"><h6>Itens do pedido:</h6></div>
