@@ -1,4 +1,6 @@
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
 
 import { Produto } from 'src/app/shared';
 
@@ -9,47 +11,33 @@ const LS_CHAVE: string = "produtos";
 })
 export class ProdutoService {
 
-  constructor() { }
+  constructor(private httpClient: HttpClient) { }
 
-  listarTodos(): Produto[] {
-    const produtos = localStorage[LS_CHAVE];
+  BASE_URL = "http://localhost:8080/usuarios/";
 
-    return produtos ? JSON.parse(produtos) : [];
+  httpOptions = {
+    headers: new HttpHeaders({
+      'Content-Type': 'application/json'
+    })
+  };
+
+  listarTodos(): Observable<Produto[]> {
+    return this.httpClient.get<Produto[]>(this.BASE_URL, this.httpOptions);
   }
 
-  inserir(produto: Produto): void {
-    const produtos = this.listarTodos();
-
-    produto.id = new Date().getTime();
-
-    produtos.push(produto);
-
-    localStorage[LS_CHAVE] = JSON.stringify(produtos);
+  inserir(produto: Produto): Observable<Produto> {
+    return this.httpClient.post<Produto>(this.BASE_URL, JSON.stringify(produto), this.httpOptions);
   }
 
-  buscarPorId(id: number): Produto | undefined {
-    const produtos: Produto[] = this.listarTodos();
-
-    return produtos.find(produto => produto.id === id);
+  buscarPorId(id: number): Observable<Produto> {
+    return this.httpClient.get<Produto>(this.BASE_URL + id, this.httpOptions);
   }
 
-  atualizar(produto: Produto): void {
-    const produtos: Produto[] = this.listarTodos();
-
-    produtos.forEach((obj, index, objs) => {
-      if (produto.id === obj.id) {
-        objs[index] = produto
-      }
-    });
-
-    localStorage[LS_CHAVE] = JSON.stringify(produtos);
+  atualizar(produto: Produto): Observable<Produto> {
+    return this.httpClient.put<Produto>(this.BASE_URL + produto.id, JSON.stringify(produto), this.httpOptions);
   }
 
-  remover(id: number): void {
-    let produtos: Produto[] = this.listarTodos();
-
-    produtos = produtos.filter(produto => produto.id !== id);
-
-    localStorage[LS_CHAVE] = JSON.stringify(produtos);
+  remover(id: number): Observable<Produto> {
+    return this.httpClient.delete<Produto>(this.BASE_URL + id, this.httpOptions);
   }
 }

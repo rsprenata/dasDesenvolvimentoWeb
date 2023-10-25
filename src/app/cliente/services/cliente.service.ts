@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
 
 import { Cliente } from '../../shared/models/cliente.model';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { Observable } from 'rxjs';
 
 const LS_CHAVE: string = "clientes";
 
@@ -9,53 +11,37 @@ const LS_CHAVE: string = "clientes";
 })
 export class ClienteService {
 
-  constructor() { }
+  constructor(private httpClient: HttpClient) { }
 
-  listarTodos(): Cliente[] {
-    const clientes = localStorage[LS_CHAVE];
+  BASE_URL = "http://localhost:8080/usuarios/";
 
-    return clientes ? JSON.parse(clientes) : [];
+  httpOptions = {
+    headers: new HttpHeaders({
+      'Content-Type': 'application/json'
+    })
+  };
+
+  listarTodos(): Observable<Cliente[]> {
+    return this.httpClient.get<Cliente[]>(this.BASE_URL, this.httpOptions);
   }
 
-  inserir(cliente: Cliente): void {
-    const clientes = this.listarTodos();
-
-    cliente.id = new Date().getTime();
-
-    clientes.push(cliente);
-
-    localStorage[LS_CHAVE] = JSON.stringify(clientes);
+  inserir(cliente: Cliente): Observable<Cliente> {
+    return this.httpClient.post<Cliente>(this.BASE_URL, JSON.stringify(cliente), this.httpOptions);
   }
 
-  buscarPorId(id: number): Cliente | undefined {
-    const clientes: Cliente[] = this.listarTodos();
-
-    return clientes.find(cliente => cliente.id === id);
+  buscarPorId(id: number): Observable<Cliente> {
+    return this.httpClient.get<Cliente>(this.BASE_URL + id, this.httpOptions);
   }
 
-  buscarPorCpf(cpf: string): Cliente | undefined {
-    const clientes: Cliente[] = this.listarTodos();
-
-    return clientes.find(cliente => cliente.cpf == cpf);
+  buscarPorCpf(cpf: string): Observable<Cliente> {
+    return this.httpClient.get<Cliente>(this.BASE_URL + cpf, this.httpOptions);
   }
 
-  atualizar(cliente: Cliente): void {
-    const clientes: Cliente[] = this.listarTodos();
-
-    clientes.forEach((obj, index, objs) => {
-      if (cliente.id === obj.id) {
-        objs[index] = cliente
-      }
-    });
-
-    localStorage[LS_CHAVE] = JSON.stringify(clientes);
+  atualizar(cliente: Cliente): Observable<Cliente> {
+    return this.httpClient.put<Cliente>(this.BASE_URL + cliente.id, JSON.stringify(cliente), this.httpOptions);
   }
 
-  remover(id: number): void {
-    let clientes: Cliente[] = this.listarTodos();
-
-    clientes = clientes.filter(cliente => cliente.id !== id);
-
-    localStorage[LS_CHAVE] = JSON.stringify(clientes);
+  remover(id: number): Observable<Cliente> {
+    return this.httpClient.delete<Cliente>(this.BASE_URL + id, this.httpOptions);
   }
 }

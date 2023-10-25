@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
 import { Pedido } from '../../shared/models/pedido.model';
 import { PedidoModule } from '../pedido.module';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { Observable } from 'rxjs';
 
 const LS_CHAVE: string = "pedidos";
 
@@ -9,31 +11,26 @@ const LS_CHAVE: string = "pedidos";
 })
 export class PedidoService {
 
-  constructor() { }
+  constructor(private httpClient: HttpClient) { }
 
-  listarTodos(): Pedido[] {
-    const pedidos = localStorage[LS_CHAVE];
+  BASE_URL = "http://localhost:8080/usuarios/";
 
-    return pedidos ? JSON.parse(pedidos) : [];
+  httpOptions = {
+    headers: new HttpHeaders({
+      'Content-Type': 'application/json'
+    })
+  };
+
+  listarTodos(): Observable<Pedido[]> {
+    return this.httpClient.get<Pedido[]>(this.BASE_URL, this.httpOptions);
   }
 
-  listarPorCpf(cpf: string): Pedido[] {
-    const pedidos = this.listarTodos();
-
-    return pedidos.filter(pedido => pedido.cliente?.cpf == cpf);
+  listarPorCpf(cpf: string): Observable<Pedido[]> {
+    return this.httpClient.get<Pedido[]>(this.BASE_URL + cpf, this.httpOptions);
   }
 
-  inserir(pedido: Pedido): void {
-
-    const pedidos = this.listarTodos();
-
-    pedido.id = new Date().getTime();
-    pedido.data = new Date();
-
-    pedidos.push(pedido);
-
-    localStorage[LS_CHAVE] = JSON.stringify(pedidos);
-
+  inserir(pedido: Pedido): Observable<Pedido> {
+    return this.httpClient.post<Pedido>(this.BASE_URL, JSON.stringify(pedido), this.httpOptions);
   }
 
 }

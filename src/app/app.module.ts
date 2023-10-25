@@ -11,6 +11,7 @@ import { ClienteModule } from './cliente';
 import { PedidoModule } from './pedido';
 import { ProdutoModule } from './produto';
 import { HomeModule } from './home';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -25,7 +26,8 @@ import { HomeModule } from './home';
     ProdutoModule,
     SharedModule,
     NgSelectModule,
-    PedidoModule
+    PedidoModule,
+    HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent]
