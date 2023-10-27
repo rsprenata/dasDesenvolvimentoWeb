@@ -21,19 +21,47 @@ export class ListarPedidoComponent {
   
   ngOnInit(): void {
     //let id = +this.route.snapshot.params['id'];
-    this.pedidos = this.listarTodos();
+    this.listarTodos();
   }
 
+
   listarTodos(): Pedido[] {
-    return this.pedidoService.listarTodos();
+    let pedidos: Pedido[] = [];
+  
+    this.pedidoService.listarTodos().subscribe({
+      next: (data: Pedido[]) => {
+        this.pedidos = data;
+      },
+      error: (error) => {
+        console.log(error)
+      }
+
+    }
+    );
+  
+    return pedidos;
   }
 
   listarPorCpf(): void {
     let cpfSemMascara = this.cpfCliente.replace(/[^\w\s]/gi, '');
-    if (cpfSemMascara)
-      this.pedidos = this.pedidoService.listarPorCpf(cpfSemMascara);
-    else
-      this.pedidos =  this.pedidoService.listarTodos();
+    if (cpfSemMascara){
+      this.pedidoService.listarPorCpf(cpfSemMascara).subscribe(
+        (res : Pedido[]) => {
+          this.pedidos = res;
+        },
+        (error) => {
+        }
+      );
+    }
+    else{
+      this.pedidoService.listarTodos().subscribe(
+        (res : Pedido[]) => {
+          this.pedidos = res;
+        },
+        (error) => {
+        }
+      )
+    }
   }
 
 

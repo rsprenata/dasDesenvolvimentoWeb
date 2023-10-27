@@ -32,7 +32,18 @@ export class RealizarPedidoComponent implements OnInit {
 
   ngOnInit(): void {
     let id = +this.route.snapshot.params['id'];
-    this.produtos = this.produtoService.listarTodos();
+    
+    this.produtoService.listarTodos().subscribe({
+      next: (data: Produto[]) => {
+        this.produtos = data;
+      },
+      error(err) {
+          console.log(err);
+      },
+      complete: () => {
+
+      }
+    });
   }
 
   insereProduto() {
@@ -42,7 +53,20 @@ export class RealizarPedidoComponent implements OnInit {
 
   salvarPedido(): void {
     if (this.formPedido.form.valid) {
-      let cliente = this.clienteService.buscarPorCpf(this.cpfCliente.replace(/[^\w\s]/gi, ''));
+      let cliente: Cliente = new Cliente(); 
+      this.clienteService.buscarPorCpf(this.cpfCliente.replace(/[^\w\s]/gi, '')).
+        subscribe({
+          next: (data: Cliente) => {
+            cliente = data
+          },
+          error: error => console.log(error),
+          complete() {
+              
+          },
+        }
+        );
+      
+      
       if (cliente) {
         this.pedido.cliente = cliente;
         this.pedido.items = this.produtosCarrinho

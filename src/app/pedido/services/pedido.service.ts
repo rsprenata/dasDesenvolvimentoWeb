@@ -13,7 +13,7 @@ export class PedidoService {
 
   constructor(private httpClient: HttpClient) { }
 
-  BASE_URL = "http://localhost:8080/usuarios/";
+  BASE_URL = "http://localhost:8080/pedidos";
 
   httpOptions = {
     headers: new HttpHeaders({
