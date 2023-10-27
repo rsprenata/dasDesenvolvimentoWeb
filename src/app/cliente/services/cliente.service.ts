@@ -13,7 +13,7 @@ export class ClienteService {
 
   constructor(private httpClient: HttpClient) { }
 
-  BASE_URL = "http://localhost:8080/usuarios/";
+  BASE_URL = "http://localhost:8080/clientes";
 
   httpOptions = {
     headers: new HttpHeaders({

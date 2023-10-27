@@ -23,7 +23,15 @@ export class InserirEditarClienteComponent implements OnInit {
     let id = +this.route.snapshot.params['id'];
 
     if (id) {
-      const res = this.clienteService.buscarPorId(id);
+      let res: Cliente = new Cliente(); 
+      this.clienteService.buscarPorId(id).subscribe({
+        next: (data: Cliente)=>{
+          res = data;
+        },
+        error(err) {
+            console.log(err)
+        },
+      });
 
       if (res !== undefined) {
         this.cliente = res;
