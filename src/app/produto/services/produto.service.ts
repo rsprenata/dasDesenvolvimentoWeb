@@ -13,7 +13,7 @@ export class ProdutoService {
 
   constructor(private httpClient: HttpClient) { }
 
-  BASE_URL = "http://localhost:8080/produtos";
+  BASE_URL = "http://localhost:8080/produtos/";
 
   httpOptions = {
     headers: new HttpHeaders({
@@ -37,7 +37,7 @@ export class ProdutoService {
     return this.httpClient.put<Produto>(this.BASE_URL + produto.id, JSON.stringify(produto), this.httpOptions);
   }
 
-  remover(id: number): Observable<Produto> {
-    return this.httpClient.delete<Produto>(this.BASE_URL + id, this.httpOptions);
+  remover(produto: Produto): Observable<Produto> {
+    return this.httpClient.delete<Produto>(this.BASE_URL +  produto.id, this.httpOptions);
   }
 }

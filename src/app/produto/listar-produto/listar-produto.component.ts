@@ -24,16 +24,13 @@ export class ListarProdutoComponent {
     let produtos: Produto[] = [];
 
     this.produtoService.listarTodos().subscribe({
-      next: (data: Produto[]) =>{
-        this.produtos = data;
-      },
-      error: (err) => {
-          console.log(err)
-      },
-      complete() {
-          console.log("passou por aqui",produtos)
-      },
-    }
+        next: (data: Produto[]) =>{
+          this.produtos = data;
+        },
+        error: (err) => {
+            console.log(err)
+        }
+      }
     )
     return produtos;
   }
@@ -43,7 +40,7 @@ export class ListarProdutoComponent {
     $event.preventDefault();
 
     if(confirm(`Deseja realmente remover o produto ${produto.descricao}?`)) {
-      this.produtoService.remover(produto.id!);
+      this.produtoService.remover(produto);
 
       this.produtos = this.listarTodos();
     }

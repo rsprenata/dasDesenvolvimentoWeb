@@ -11,6 +11,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 })
 export class InserirEditarProdutoComponent implements OnInit {
   @ViewChild('formProduto') formProduto!: NgForm;
+
   produto!: Produto;
 
   constructor(
@@ -23,14 +24,14 @@ export class InserirEditarProdutoComponent implements OnInit {
     let id = +this.route.snapshot.params['id'];
 
     if (id) {
-      this.produtoService.buscarPorId(id).subscribe(
-        (res : Produto) => {
+      this.produtoService.buscarPorId(id).subscribe({
+        next: (res : Produto) => {
           this.produto = res
         },
-        (error) => {
+        error: (error) => {
           throw new Error("Produto não encontrado: id = " + id + error);
         }
-      );
+      });
     } else {
       this.produto = new Produto();
     }
@@ -38,15 +39,46 @@ export class InserirEditarProdutoComponent implements OnInit {
 
   inserir(): void {
     if (this.formProduto.form.valid) {
-      this.produtoService.inserir(this.produto);
+
+      this.produtoService.inserir(this.produto).subscribe({
+        next: (res: Produto) => {
+          this.produto = res
+          this.router.navigate(["/produto"]);
+        },
+        error: (error) => {
+          throw new Error("Produto não encontrado: id = " + this.produto.id + ", com erro " + error);
+        }
+      });
       
-      this.router.navigate(["/produto"]);
     }
   }
 
   atualizar(): void {
+    if (this.formProduto.form.valid) {      
+      this.produtoService.atualizar(this.produto).subscribe({
+        next: (res: Produto) => {
+          this.produto = res;
+          this.router.navigate(["/produto"]);
+        },
+        error: (error) => {
+          throw new Error("Produto não encontrado: id = " + this.produto.id + ", com erro " + error);
+        }
+      });
+      
+    }
+
+  }  
+
+  remover(): void {
     if (this.formProduto.form.valid) {
-      this.produtoService.atualizar(this.produto);
+      this.produtoService.remover(this.produto).subscribe({
+        next: () => {
+          this.router.navigate(["/produto"]);
+        },
+        error: (error) => {
+          throw new Error("Produto não encontrado: id = " + this.produto.id + ", com erro " + error);
+        }
+      });
 
       this.router.navigate(['/produto']);
     }
