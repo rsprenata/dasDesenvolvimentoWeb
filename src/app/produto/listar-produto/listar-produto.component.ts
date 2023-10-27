@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { Produto } from 'src/app/shared';
+import { Pedido, Produto } from 'src/app/shared';
 import { ProdutoService } from '../services';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
@@ -9,18 +9,33 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
   styleUrls: ['./listar-produto.component.css']
 })
 export class ListarProdutoComponent {
-  public produtos: Produto[] = []
+  public produtos: Produto[] = [];
 
   constructor( private produtoService: ProdutoService,
               private modalService: NgbModal)
   {}
 
   ngOnInit(): void {
-    this.produtos = this.listarTodos();
+    this.listarTodos();
   }
 
   listarTodos(): Produto[]{
-    return this.produtoService.listarTodos();
+
+    let produtos: Produto[] = [];
+
+    this.produtoService.listarTodos().subscribe({
+      next: (data: Produto[]) =>{
+        this.produtos = data;
+      },
+      error: (err) => {
+          console.log(err)
+      },
+      complete() {
+          console.log("passou por aqui",produtos)
+      },
+    }
+    )
+    return produtos;
   }
 
 

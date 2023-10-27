@@ -23,13 +23,14 @@ export class InserirEditarProdutoComponent implements OnInit {
     let id = +this.route.snapshot.params['id'];
 
     if (id) {
-      const res = this.produtoService.buscarPorId(id);
-
-      if (res !== undefined) {
-        this.produto = res;
-      } else {
-        throw new Error ("Produto não encontrado: id = " + id);
-      }
+      this.produtoService.buscarPorId(id).subscribe(
+        (res : Produto) => {
+          this.produto = res
+        },
+        (error) => {
+          throw new Error("Produto não encontrado: id = " + id + error);
+        }
+      );
     } else {
       this.produto = new Produto();
     }
