@@ -28,10 +28,16 @@ export class ListarClienteComponent implements OnInit {
     let clientes: Cliente[] = [];
     this.clienteService.listarTodos().subscribe({
       next: (data: Cliente[])=>{
-        this.clientes = data;
+        if (data == null) {
+          this.clientes = [];
+        }
+        else {
+          this.clientes = data;
+        }
       },
       error: (error) =>{
-        console.log("Erro com clientes"+error);
+        console.log("Erro com clientes");
+        console.log(error);
       }
     }
       
@@ -44,29 +50,20 @@ export class ListarClienteComponent implements OnInit {
     $event.preventDefault();
 
     if(confirm(`Deseja realmente remover o cliente ${cliente.nome}?`)) {
-      let pedidos: Pedido[] = [];
       this.pedidoService.listarPorCpf(cliente.cpf!).subscribe(
-        (res: Pedido[]) => {
-          pedidos = res;
-        },
-        error => console.log(error)
+        pedidos => {
+          if (!pedidos || pedidos.length <= 0) {
+            this.clienteService.remover(cliente.id!).subscribe(
+              cliente => {
+                this.clientes = this.listarTodos();
+              }
+            );
+          } else {
+            alert('Não é possível excluir esse cliente pois ele tem pedidos.')
+          }
+        }
       );
-      if (!pedidos || pedidos.length <= 0)
-        this.clienteService.remover(cliente.id!);
-      else 
-        alert('Não é possível excluir esse cliente pois ele tem pedidos.')
-
-      this.clientes = this.listarTodos();
     }
-    // if(confirm(`Deseja realmente remover o cliente ${cliente.nome}?`)) {
-    //   let pedidos = this.pedidoService.listarPorCpf(cliente.cpf!);
-    //   if (!pedidos || pedidos.length <= 0)
-    //     this.clienteService.remover(cliente.id!);
-    //   else 
-    //     alert('Não é possível excluir esse cliente pois ele tem pedidos.')
-
-    //   this.clientes = this.listarTodos();
-    
   }
 
   abrirModalCliente(cliente: Cliente) {

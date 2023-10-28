@@ -13,7 +13,7 @@ export class PedidoService {
 
   constructor(private httpClient: HttpClient) { }
 
-  BASE_URL = "http://localhost:8080/pedidos";
+  BASE_URL = "http://localhost:8080/pedidos/";
 
   httpOptions = {
     headers: new HttpHeaders({
@@ -27,6 +27,10 @@ export class PedidoService {
 
   listarPorCpf(cpf: string): Observable<Pedido[]> {
     return this.httpClient.get<Pedido[]>(this.BASE_URL + cpf, this.httpOptions);
+  }
+
+  listarPorIdProduto(id: number): Observable<Pedido[]> {
+    return this.httpClient.get<Pedido[]>(this.BASE_URL + 'produto/' + id, this.httpOptions);
   }
 
   inserir(pedido: Pedido): Observable<Pedido> {

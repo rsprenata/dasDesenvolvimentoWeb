@@ -13,7 +13,7 @@ export class ClienteService {
 
   constructor(private httpClient: HttpClient) { }
 
-  BASE_URL = "http://localhost:8080/clientes";
+  BASE_URL = "http://localhost:8080/clientes/";
 
   httpOptions = {
     headers: new HttpHeaders({
@@ -34,7 +34,7 @@ export class ClienteService {
   }
 
   buscarPorCpf(cpf: string): Observable<Cliente> {
-    return this.httpClient.get<Cliente>(this.BASE_URL + cpf, this.httpOptions);
+    return this.httpClient.get<Cliente>(this.BASE_URL + 'cpf/' + cpf, this.httpOptions);
   }
 
   atualizar(cliente: Cliente): Observable<Cliente> {

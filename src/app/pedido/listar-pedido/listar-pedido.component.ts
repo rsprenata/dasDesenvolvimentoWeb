@@ -45,22 +45,18 @@ export class ListarPedidoComponent {
   listarPorCpf(): void {
     let cpfSemMascara = this.cpfCliente.replace(/[^\w\s]/gi, '');
     if (cpfSemMascara){
-      this.pedidoService.listarPorCpf(cpfSemMascara).subscribe(
-        (res : Pedido[]) => {
-          this.pedidos = res;
+      this.pedidoService.listarPorCpf(cpfSemMascara).subscribe({
+        next: (data: Pedido[]) => {
+          this.pedidos = data;
         },
-        (error) => {
+        error: (error) => {
+          console.log(error)
         }
+      }
       );
     }
     else{
-      this.pedidoService.listarTodos().subscribe(
-        (res : Pedido[]) => {
-          this.pedidos = res;
-        },
-        (error) => {
-        }
-      )
+      this.listarTodos();
     }
   }
 

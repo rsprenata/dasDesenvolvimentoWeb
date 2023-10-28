@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { Pedido, Produto } from 'src/app/shared';
 import { ProdutoService } from '../services';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { PedidoService } from 'src/app/pedido/services';
 
 @Component({
   selector: 'app-listar-produto',
@@ -12,6 +13,7 @@ export class ListarProdutoComponent {
   public produtos: Produto[] = [];
 
   constructor( private produtoService: ProdutoService,
+                private pedidoService: PedidoService,
               private modalService: NgbModal)
   {}
 
@@ -20,8 +22,6 @@ export class ListarProdutoComponent {
   }
 
   listarTodos(): Produto[]{
-
-    let produtos: Produto[] = [];
 
     this.produtoService.listarTodos().subscribe({
         next: (data: Produto[]) =>{
@@ -32,7 +32,7 @@ export class ListarProdutoComponent {
         }
       }
     )
-    return produtos;
+    return this.produtos;
   }
 
 
@@ -40,9 +40,19 @@ export class ListarProdutoComponent {
     $event.preventDefault();
 
     if(confirm(`Deseja realmente remover o produto ${produto.descricao}?`)) {
-      this.produtoService.remover(produto);
-
-      this.produtos = this.listarTodos();
+      this.pedidoService.listarPorIdProduto(produto.id!).subscribe(
+        pedidos => {
+          if (!pedidos || pedidos.length <= 0) {
+            this.produtoService.remover(produto).subscribe(
+              produto => {
+                this.produtos = this.listarTodos();
+              }
+            );
+          } else {
+            alert('Não é possível excluir pois esse produto esta vinculado a pedidos.')
+          }
+        }
+      );
     }
   }
 }

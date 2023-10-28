@@ -28,17 +28,17 @@ export class RealizarPedidoComponent implements OnInit {
     private clienteService: ClienteService,
     private route: ActivatedRoute,
     private router: Router
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     let id = +this.route.snapshot.params['id'];
-    
+
     this.produtoService.listarTodos().subscribe({
       next: (data: Produto[]) => {
         this.produtos = data;
       },
       error(err) {
-          console.log(err);
+        console.log(err);
       },
       complete: () => {
 
@@ -47,38 +47,53 @@ export class RealizarPedidoComponent implements OnInit {
   }
 
   insereProduto() {
-    let novoItem: ItemDoPedido = new ItemDoPedido(0, this.produtoSelecionado)
-    this.produtosCarrinho.push(novoItem)
+    if (this.produtosCarrinho.some(p => p.produto?.id == this.produtoSelecionado.id)) {
+      alert("Produto já adicionado no carrinho");
+    } else {
+      let novoItem: ItemDoPedido = new ItemDoPedido(0, this.produtoSelecionado)
+      this.produtosCarrinho.push(novoItem)
+    }
   }
 
   salvarPedido(): void {
     if (this.formPedido.form.valid) {
-      let cliente: Cliente = new Cliente(); 
-      this.clienteService.buscarPorCpf(this.cpfCliente.replace(/[^\w\s]/gi, '')).
-        subscribe({
-          next: (data: Cliente) => {
-            cliente = data
-          },
-          error: error => console.log(error),
-          complete() {
-              
-          },
+
+      if (this.produtosCarrinho.length > 0) {
+
+        if (this.produtosCarrinho.some(p => p.quantidade == 0)) {
+          alert("Quantidade deve ser maior que 0");
+        } else {
+          let cliente: Cliente = new Cliente();
+          this.clienteService.buscarPorCpf(this.cpfCliente.replace(/[^\w\s]/gi, '')).
+            subscribe({
+              next: (data: Cliente) => {
+                cliente = data;
+
+                if (cliente) {
+                  this.pedido.cliente = cliente;
+                  this.pedido.items = this.produtosCarrinho
+                  this.pedidoService.inserir(this.pedido).subscribe(
+                    pedido => {
+                      this.pedido = new Pedido();
+                      this.produtosCarrinho = [];
+                      this.cpfCliente = ""
+                      alert("Pedido realizado com sucesso")
+                      this.router.navigate(["/pedido"]);
+                    }
+                  );
+                } else {
+                  alert("Cliente não encontrado");
+                }
+              },
+              error: error => console.log(error),
+              complete() {
+
+              },
+            }
+            );
         }
-        );
-      
-      
-      if (cliente) {
-        this.pedido.cliente = cliente;
-        this.pedido.items = this.produtosCarrinho
-        this.pedidoService.inserir(this.pedido);
-        
-        this.pedido = new Pedido();
-        this.produtosCarrinho = [];
-        this.cpfCliente = ""
-        alert("Pedido realizado com sucesso")
-        this.router.navigate(["/pedido"]);
       } else {
-        alert("Cliente não encontrado")
+        alert("Adicione pelo menos 1 produto");
       }
     }
   }

@@ -38,9 +38,9 @@
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let item of produtosCarrinho">
+        <tr *ngFor="let item of produtosCarrinho; let ind=index;">
           <td>{{item.produto?.descricao}}</td>
-          <td><input type="number" class="form-control" id="quantidade" name="quantidade" required
+          <td><input type="number" class="form-control" id="quantidade" name="quantidade-{{ind}}" required
             [(ngModel)]="item.quantidade"></td>
         </tr>
       </tbody>

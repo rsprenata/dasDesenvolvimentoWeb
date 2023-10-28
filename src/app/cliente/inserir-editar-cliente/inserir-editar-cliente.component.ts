@@ -11,7 +11,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 })
 export class InserirEditarClienteComponent implements OnInit {
   @ViewChild('formCliente') formCliente!: NgForm;
-  cliente!: Cliente;
+  cliente: Cliente = new Cliente();
 
   constructor(
     private clienteService: ClienteService,
@@ -23,21 +23,14 @@ export class InserirEditarClienteComponent implements OnInit {
     let id = +this.route.snapshot.params['id'];
 
     if (id) {
-      let res: Cliente = new Cliente(); 
       this.clienteService.buscarPorId(id).subscribe({
         next: (data: Cliente)=>{
-          res = data;
+          this.cliente = data;
         },
         error(err) {
             console.log(err)
         },
       });
-
-      if (res !== undefined) {
-        this.cliente = res;
-      } else {
-        throw new Error ("Cliente não encontrado: id = " + id);
-      }
     } else {
       this.cliente = new Cliente();
     }
@@ -45,17 +38,22 @@ export class InserirEditarClienteComponent implements OnInit {
 
   inserir(): void {
     if (this.formCliente.form.valid) {
-      this.clienteService.inserir(this.cliente);
-      
-      this.router.navigate(["/cliente"]);
+      this.clienteService.inserir(this.cliente).subscribe(
+        cliente => {
+          this.router.navigate(["/cliente"]);
+        }
+      );
     }
   }
 
   atualizar(): void {
     if (this.formCliente.form.valid) {
-      this.clienteService.atualizar(this.cliente);
+      this.clienteService.atualizar(this.cliente).subscribe(
+        cliente => {
+          this.router.navigate(['/cliente']);
 
-      this.router.navigate(['/cliente']);
+        }
+      );
     }
   }
 }

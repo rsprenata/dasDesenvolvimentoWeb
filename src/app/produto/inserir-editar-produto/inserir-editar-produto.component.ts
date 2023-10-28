@@ -11,8 +11,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 })
 export class InserirEditarProdutoComponent implements OnInit {
   @ViewChild('formProduto') formProduto!: NgForm;
-
-  produto!: Produto;
+  produto: Produto = new Produto();
 
   constructor(
     private produtoService: ProdutoService,
@@ -25,12 +24,12 @@ export class InserirEditarProdutoComponent implements OnInit {
 
     if (id) {
       this.produtoService.buscarPorId(id).subscribe({
-        next: (res : Produto) => {
-          this.produto = res
+        next: (data: Produto)=>{
+          this.produto = data;
         },
-        error: (error) => {
-          throw new Error("Produto não encontrado: id = " + id + error);
-        }
+        error(err) {
+            console.log(err)
+        },
       });
     } else {
       this.produto = new Produto();
@@ -39,16 +38,11 @@ export class InserirEditarProdutoComponent implements OnInit {
 
   inserir(): void {
     if (this.formProduto.form.valid) {
-
-      this.produtoService.inserir(this.produto).subscribe({
-        next: (res: Produto) => {
-          this.produto = res
+      this.produtoService.inserir(this.produto).subscribe(
+        produto => {
           this.router.navigate(["/produto"]);
-        },
-        error: (error) => {
-          throw new Error("Produto não encontrado: id = " + this.produto.id + ", com erro " + error);
         }
-      });
+      );
       
     }
   }
@@ -71,16 +65,12 @@ export class InserirEditarProdutoComponent implements OnInit {
 
   remover(): void {
     if (this.formProduto.form.valid) {
-      this.produtoService.remover(this.produto).subscribe({
-        next: () => {
-          this.router.navigate(["/produto"]);
-        },
-        error: (error) => {
-          throw new Error("Produto não encontrado: id = " + this.produto.id + ", com erro " + error);
-        }
-      });
+      this.produtoService.atualizar(this.produto).subscribe(
+        produto => {
+          this.router.navigate(['/produto']);
 
-      this.router.navigate(['/produto']);
+        }
+      );
     }
   }
 }
