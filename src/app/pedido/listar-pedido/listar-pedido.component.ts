@@ -24,7 +24,7 @@ export class ListarPedidoComponent {
     this.listarTodos();
   }
 
-
+  
   listarTodos(): Pedido[] {
     let pedidos: Pedido[] = [];
   
